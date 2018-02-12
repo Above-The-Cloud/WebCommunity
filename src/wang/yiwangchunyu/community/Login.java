@@ -3,6 +3,8 @@ package wang.yiwangchunyu.community;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
@@ -50,6 +52,7 @@ public class Login extends HttpServlet {
             }
           }
         
+        
         if ("123".equals(username)&&"123".equals(password)) {
             System.out.println("登录成功");
             response.getOutputStream().write("success".getBytes("utf-8"));       
@@ -62,6 +65,48 @@ public class Login extends HttpServlet {
      
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
+    	//打印协议信息
+    	//httpPrinter(request);
+    	
+    	InputStream inStream = request.getInputStream(); 
+        ObjectInputStream objInStream = new ObjectInputStream(inStream); 
+        Object obj = null;
+		try {
+			obj = objInStream.readObject();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        Map m = (Map) obj;
+        String username = m.get("username").toString();
+        String password = m.get("password").toString();
+        
+        String sql  = "SELECT user_password FROM user_info WHERE user_name = '" + username + "';";
+        SQLHelper sqlHelper = new SQLHelper();
+        ResultSet rs = sqlHelper.query(sql);
+        try {
+			if(rs.wasNull()==false) {
+				while(rs.next()) {
+					System.out.println("rs.next()");
+					if(rs.getString("user_password").equals(password)) {
+						System.out.println("登录成功");
+			            response.getOutputStream().write("success".getBytes("utf-8")); 
+					}
+				}	
+			}
+			else {
+				System.out.println("登录失败");
+	            response.getOutputStream().write("fail".getBytes("utf-8"));    
+			}
+			sqlHelper.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+         
+    }
+    public void httpPrinter(HttpServletRequest request) throws ServletException, IOException{
     	InputStream inStream = request.getInputStream(); 
         ObjectInputStream objInStream = new ObjectInputStream(inStream); 
         Object obj = null;
@@ -99,16 +144,7 @@ public class Login extends HttpServlet {
             for(int k=0;k<value.length;k++){
                 System.out.println(ok+"="+value[k]);
             }
-          }
-        
-        if ("123".equals(username)&&"123".equals(password)) {
-            System.out.println("登录成功");
-            response.getOutputStream().write("success".getBytes("utf-8"));       
-        }else {
-            System.out.println("登录失败");
-            response.getOutputStream().write("fail".getBytes("utf-8"));    
-        }
-         
+         }
     }
  
 }
