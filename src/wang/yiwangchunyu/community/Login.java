@@ -86,19 +86,36 @@ public class Login extends HttpServlet {
         SQLHelper sqlHelper = new SQLHelper();
         ResultSet rs = sqlHelper.query(sql);
         try {
-			if(rs.wasNull()==false) {
-				while(rs.next()) {
-					System.out.println("rs.next()");
-					if(rs.getString("user_password").equals(password)) {
-						System.out.println("µÇÂ¼³É¹¦");
-			            response.getOutputStream().write("success".getBytes("utf-8")); 
-					}
-				}	
-			}
-			else {
+        	if(rs.next())
+        	{
+        		System.out.println("rs.next()");
+				if(rs.getString("user_password").equals(password)) {
+					System.out.println("µÇÂ¼³É¹¦");
+		            response.getOutputStream().write("success".getBytes("utf-8")); 
+				}
+				else {
+					System.out.println("µÇÂ¼Ê§°Ü");
+		            response.getOutputStream().write("fail".getBytes("utf-8"));    
+				}
+        	}
+        	else {
 				System.out.println("µÇÂ¼Ê§°Ü");
 	            response.getOutputStream().write("fail".getBytes("utf-8"));    
 			}
+        	
+//			if(rs.wasNull()==false) {
+//				while(rs.next()) {
+//					System.out.println("rs.next()");
+//					if(rs.getString("user_password").equals(password)) {
+//						System.out.println("µÇÂ¼³É¹¦");
+//			            response.getOutputStream().write("success".getBytes("utf-8")); 
+//					}
+//				}	
+//			}
+//			else {
+//				System.out.println("µÇÂ¼Ê§°Ü");
+//	            response.getOutputStream().write("fail".getBytes("utf-8"));    
+//			}
 			sqlHelper.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
