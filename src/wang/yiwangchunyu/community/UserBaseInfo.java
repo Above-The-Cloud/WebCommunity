@@ -5,21 +5,23 @@ import java.io.Serializable;
 /**
  * @author
  *
- * 瑙ｆ瀽鑾峰彇鐢ㄦ埛鍩烘湰淇℃伅
+ * 解析获取用户基本信息
  */
 public class UserBaseInfo implements Serializable{
 
-//	 {"ret":"0","errcode":"0","msg":"鎺ュ彛璋冪敤鎴愬姛","nickname":"erom","userhead":"/img/users/head/avatar.png",
+//	 {"ret":"0","errcode":"0","msg":"接口调用成功","nickname":"erom","userhead":"/img/users/head/avatar.png",
 //	"userid":"11653","email":"123456789@qq.com","role":"0"}
-	private String userid;//鐢ㄦ埛id
-	private String nickname;//鏄电О
-	private String userhead;//鐢ㄦ埛澶村儚璺緞 
-	private String email;//鐢ㄦ埛閭欢
-	private String ret;//璇锋眰鐘舵�佺爜  0锛氭甯革紝 1锛氱敤鎴蜂笉瀛樺湪
-	private String errcode;//閿欒鐮�
+	private String userid;//用户id
+	private String nickname;//昵称
+	private String gender;//性别
+	private String address;//住址
+	private String userhead;//用户头像路径 
+	private String email;//用户邮件
+	private String ret;//请求状态码  0：正常， 1：用户不存在
+	private String errcode;//错误码
 	private String msg;
 	
-	private String role;// 0:管理员， 1：非管理员
+	private String role;//角色 是不是管理员
 	
 	
 	
@@ -73,6 +75,19 @@ public class UserBaseInfo implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
- 
+	public String getGender() {
+		return gender;
+	}
 
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 }

@@ -43,7 +43,7 @@ public class Login extends HttpServlet {
 	    String user_password = request.getParameter("user_password");
 	    System.out.println(user_password);
 	    
-	    String sql  = "SELECT * FROM user_info WHERE user_id = '" + user_id + "' user_password = '" + user_password + "';";
+	    String sql  = "SELECT * FROM user_info WHERE user_id = '" + user_id + "' and user_password = '" + user_password + "';";
 	    SQLHelper sqlHelper = new SQLHelper();
         ResultSet rs = sqlHelper.query(sql);
         UserBaseInfo userBaseInfo = new UserBaseInfo();
@@ -63,6 +63,7 @@ public class Login extends HttpServlet {
 			String userInfoString = gson.toJson(userBaseInfo);
 			response.getOutputStream().write(userInfoString.getBytes("utf-8"));
 			System.out.println(userInfoString);
+			
 			sqlHelper.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

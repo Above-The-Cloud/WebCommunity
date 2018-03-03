@@ -4,11 +4,11 @@ import java.sql.*;
 
 public class SQLHelper {
  
-    // JDBC Çý¶¯Ãû¼°Êý¾Ý¿â URL
+    // JDBC ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
     public static final String DB_URL = SQLConfig.DB_URL;
  
-    // Êý¾Ý¿âµÄÓÃ»§ÃûÓëÃÜÂë£¬ÐèÒª¸ù¾Ý×Ô¼ºµÄÉèÖÃ
+    // ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë£¬ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public static final String USER = SQLConfig.DB_USER;
     public static final String PASS = SQLConfig.DB_PASS;
     public Connection conn = null;
@@ -17,7 +17,7 @@ public class SQLHelper {
     
 	public ResultSet query(String sql){
         
-            // ×¢²á JDBC Çý¶¯
+            // ×¢ï¿½ï¿½ JDBC ï¿½ï¿½ï¿½ï¿½
             try {
 				Class.forName("com.mysql.jdbc.Driver");
 			} catch (ClassNotFoundException e) {
@@ -25,8 +25,8 @@ public class SQLHelper {
 				e.printStackTrace();
 			}
         
-            // ´ò¿ªÁ´½Ó
-            System.out.println("Á¬½ÓÊý¾Ý¿â...");
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            System.out.println("");
             try {
 				conn = DriverManager.getConnection(DB_URL,USER,PASS);
 				
@@ -34,7 +34,7 @@ public class SQLHelper {
 				
 				rs = stmt.executeQuery(sql);
 				
-				System.out.println("Ö´ÐÐÍê²éÑ¯Óï¾ä....");
+				System.out.println("æŸ¥è¯¢æ‰§è¡Œå®Œæ¯•....");
 				return rs;
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -42,10 +42,42 @@ public class SQLHelper {
 			}
             return rs;
     }
+	public int update(String sql){
+        
+        // ×¢ï¿½ï¿½ JDBC ï¿½ï¿½ï¿½ï¿½
+		int state =0 ;
+        try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        System.out.println("");
+        try {
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			
+			stmt = conn.createStatement();
+			
+			state = stmt.executeUpdate(sql);
+			System.out.println("æ›´æ–°æ‰§è¡Œå®Œæ¯•....");
+			return state;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return state;
+}
 	public void close() throws SQLException
 	{
-		  rs.close();
-          stmt.close();
-          conn.close();
+		if(rs!=null) {
+			 rs.close();
+	         stmt.close();
+	         conn.close();
+		}else {
+			
+		}
+		 
 	}
 }
