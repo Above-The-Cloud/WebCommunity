@@ -28,7 +28,9 @@ public class HelloServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 使用 GBK 设置中文正常显示
         response.setCharacterEncoding("GBK");
-        response.getWriter().write("yiwangchunyu.wang");
+        response.getWriter().write("yiwangchunyu.wang" + "<br>");
+        String ip = request.getRemoteAddr().toString();
+        System.out.println(ip);
     }
 
     /**

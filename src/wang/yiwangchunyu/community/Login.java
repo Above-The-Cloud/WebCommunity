@@ -14,6 +14,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
  
 public class Login extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -23,104 +25,51 @@ public class Login extends HttpServlet {
      
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        System.out.println("---------------------------------------------------------");
-        System.out.println("”√ªß√˚£∫"+username);
-        System.out.println("√‹¬Î£∫"+password);
-        Enumeration headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-          String key = (String) headerNames.nextElement();
-          String value = request.getHeader(key);
-          System.out.println(key + " = " + value);
-        }
-        Map map=request.getParameterMap();
-        Set keSet=map.entrySet();
-        for(Iterator itr=keSet.iterator();itr.hasNext();){
-            Map.Entry me=(Map.Entry)itr.next();
-            Object ok=me.getKey();
-            Object ov=me.getValue();
-            String[] value=new String[1];
-            if(ov instanceof String[]){
-                value=(String[])ov;
-            }else{
-                value[0]=ov.toString();
-            }
-
-            for(int k=0;k<value.length;k++){
-                System.out.println(ok+"="+value[k]);
-            }
-          }
-        
-        
-        if ("123".equals(username)&&"123".equals(password)) {
-            System.out.println("µ«¬º≥…π¶");
-            response.getOutputStream().write("success".getBytes("utf-8"));       
-        }else {
-            System.out.println("µ«¬º ß∞‹");
-            response.getOutputStream().write("fail".getBytes("utf-8"));    
-        }
+    	// ‰ΩøÁî® GBK ËÆæÁΩÆ‰∏≠ÊñáÊ≠£Â∏∏ÊòæÁ§∫
+	    response.setCharacterEncoding("GBK");
+	    response.getWriter().write("Login..." );
+	    String ip = request.getRemoteAddr().toString();
+	    System.out.println(ip);
+		response.getWriter().append("Served at: ").append(request.getContextPath());
     }
  
      
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	
-    	//¥Ú”°–≠“È–≈œ¢
-    	//httpPrinter(request);
-    	
-    	InputStream inStream = request.getInputStream(); 
-        ObjectInputStream objInStream = new ObjectInputStream(inStream); 
-        Object obj = null;
-		try {
-			obj = objInStream.readObject();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        Map m = (Map) obj;
-        String username = m.get("username").toString();
-        String password = m.get("password").toString();
-        
-        String sql  = "SELECT user_password FROM user_info WHERE user_name = '" + username + "';";
-        SQLHelper sqlHelper = new SQLHelper();
+    	String ip = request.getRemoteAddr().toString();
+	    System.out.println(ip);
+	    String user_id = request.getParameter("user_id");
+	    System.out.println(user_id);
+	    String user_password = request.getParameter("user_password");
+	    System.out.println(user_password);
+	    
+	    String sql  = "SELECT * FROM user_info WHERE user_id = '" + user_id + "' user_password = '" + user_password + "';";
+	    SQLHelper sqlHelper = new SQLHelper();
         ResultSet rs = sqlHelper.query(sql);
+        UserBaseInfo userBaseInfo = new UserBaseInfo();
         try {
         	if(rs.next())
-        	{
-        		System.out.println("rs.next()");
-				if(rs.getString("user_password").equals(password)) {
-					System.out.println("µ«¬º≥…π¶");
-		            response.getOutputStream().write("success".getBytes("utf-8")); 
-				}
-				else {
-					System.out.println("µ«¬º ß∞‹");
-		            response.getOutputStream().write("fail".getBytes("utf-8"));    
-				}
+        	{		
+        			
+        			userBaseInfo.setUserid(rs.getString("user_id"));
+        			userBaseInfo.setNickname(rs.getString("user_name"));
+        			userBaseInfo.setRet("0");
+        			userBaseInfo.setRole("0");		
         	}
         	else {
-				System.out.println("µ«¬º ß∞‹");
-	            response.getOutputStream().write("fail".getBytes("utf-8"));    
+				userBaseInfo.setRet("1");
 			}
-        	
-//			if(rs.wasNull()==false) {
-//				while(rs.next()) {
-//					System.out.println("rs.next()");
-//					if(rs.getString("user_password").equals(password)) {
-//						System.out.println("µ«¬º≥…π¶");
-//			            response.getOutputStream().write("success".getBytes("utf-8")); 
-//					}
-//				}	
-//			}
-//			else {
-//				System.out.println("µ«¬º ß∞‹");
-//	            response.getOutputStream().write("fail".getBytes("utf-8"));    
-//			}
+        	Gson gson = new Gson();
+			String userInfoString = gson.toJson(userBaseInfo);
+			response.getOutputStream().write(userInfoString.getBytes("utf-8"));
+			System.out.println(userInfoString);
 			sqlHelper.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+    	
          
     }
     public void httpPrinter(HttpServletRequest request) throws ServletException, IOException{
@@ -137,8 +86,8 @@ public class Login extends HttpServlet {
         String username = m.get("username").toString();
         String password = m.get("password").toString();
         System.out.println("---------------------------------------------------------");
-        System.out.println("”√ªß√˚£∫"+username);
-        System.out.println("√‹¬Î£∫"+password);
+        System.out.println("ÔøΩ√ªÔøΩÔøΩÔøΩÔøΩÔøΩ"+username);
+        System.out.println("ÔøΩÔøΩÔøΩÎ£∫"+password);
         Enumeration headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
           String key = (String) headerNames.nextElement();
