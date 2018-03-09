@@ -54,9 +54,13 @@ public class Register extends HttpServlet {
 	    System.out.println(user_name);
 	    String user_password = request.getParameter("user_password");
 	    System.out.println(user_password);
+	    String user_email = request.getParameter("user_email");
+	    System.out.println(user_email);
+	    String user_address = request.getParameter("user_address");
+	    System.out.println(user_address);
 	    
 	    String sql  = "INSERT INTO user_info(user_id, user_name, user_password, submission_time) "
-	    		+ "VALUES('" + user_id +"','" + user_name + "','" + user_password + "' , current_time());";
+	    		+ "VALUES('" + user_id +"','" + user_name + "','" + user_password + "', current_time());";
 	    SQLHelper sqlHelper = new SQLHelper();
         int rs = sqlHelper.update(sql);
         UserBaseInfo userBaseInfo = new UserBaseInfo();
@@ -66,6 +70,8 @@ public class Register extends HttpServlet {
         			
         			userBaseInfo.setUserid(user_id);
         			userBaseInfo.setNickname(user_name);
+        			userBaseInfo.setEmail(user_email);
+        			userBaseInfo.setAddress(user_address);
         			userBaseInfo.setRet("0");
         			userBaseInfo.setRole("0");		
         	}
