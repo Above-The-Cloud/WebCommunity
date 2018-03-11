@@ -59,21 +59,28 @@ public class Register extends HttpServlet {
 	    String user_address = request.getParameter("user_address");
 	    System.out.println(user_address);
 	    
+	    SQLHelper sqlHelper = new SQLHelper();
 	    String sql  = "INSERT INTO user_info(user_id, user_name, user_password, submission_time) "
 	    		+ "VALUES('" + user_id +"','" + user_name + "','" + user_password + "', current_time());";
-	    SQLHelper sqlHelper = new SQLHelper();
+	    
         int rs = sqlHelper.update(sql);
         UserBaseInfo userBaseInfo = new UserBaseInfo();
         try {
         	if(rs>0)
         	{		
-        			
+        		SQLHelper sqlHelper2 = new SQLHelper();
+        		String sql2  = "INSERT INTO user_info_extension(user_id, user_email, user_address , submission_time) "
+        	    		+ "VALUES('" + user_id +"','" + user_email + "','" + user_address + "', current_time());";
+        		int rs2 = sqlHelper2.update(sql2);
+        		if(rs2>0) {
         			userBaseInfo.setUserid(user_id);
         			userBaseInfo.setNickname(user_name);
         			userBaseInfo.setEmail(user_email);
         			userBaseInfo.setAddress(user_address);
         			userBaseInfo.setRet("0");
-        			userBaseInfo.setRole("0");		
+        			userBaseInfo.setRole("0");	
+        		}
+        		sqlHelper2.close();
         	}
         	else {
 				userBaseInfo.setRet("1");

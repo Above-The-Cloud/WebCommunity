@@ -13,7 +13,7 @@ create table user_info_extension(
 	user_id varchar(100) primary key references user_info,
 	user_address varchar(100) null,
 	user_email varchar(100) null,
-	sybmussion_time datetime)ENGINE=InnoDB DEFAULT CHARSET=utf8; 
+	submission_time datetime)ENGINE=InnoDB DEFAULT CHARSET=utf8; 
 	
 
 CREATE TABLE task_publish_info(
