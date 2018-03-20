@@ -1,5 +1,8 @@
 package wang.yiwangchunyu.community.dataStructures;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * Created by yiwangchunyu on 2018/3/9.
  */
@@ -7,13 +10,37 @@ package wang.yiwangchunyu.community.dataStructures;
 public class TaskPublishingInfo {
     private String publishId;
     private String userId;
+    private String restriction;
     private String category;
     private String title;
     private String content;
-    private int price;
+    private int commission;
     private int viewed;
     private int liked;
+    private Date publish_time;
     private String code;//状态码 0：正常
+    private String msg;
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public String  getRestriction(){ return restriction ;}
+
+    public void setRestriction(String restriction){ this.restriction = restriction; }
+
+    public Date getPublish_time() {
+        return publish_time;
+    }
+
+    public void setPublish_time(Date publish_time) {
+        this.publish_time = publish_time;
+    }
+
     public String getPublishId() {
         return publishId;
     }
@@ -54,12 +81,12 @@ public class TaskPublishingInfo {
         this.content = content;
     }
 
-    public int getPrice() {
-        return price;
+    public int getCommission() {
+        return commission;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setCommission(int commission) {
+        this.commission = commission;
     }
 
     public int getViewed() {

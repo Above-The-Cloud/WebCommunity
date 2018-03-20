@@ -6,7 +6,8 @@ public class Urlconstance {
 	   
 
 	   public static final String PUBLIC_KEY ="abovethecloud";
-	   public static final String APP_URL = "http://139.196.141.24:8080/WebCommunity/";
+	   public static final String APP_URL = "http://community.yiwangchunyu.wang/";
+	   public static final String IMAGE_URL = APP_URL + "images/";
 	   
 
 	   public static final String KEY_REGIST_INFO ="users/user_register_Handler.ashx";
@@ -16,4 +17,6 @@ public class Urlconstance {
 
 
 	   public static final String KEY_USER_BASE_INFO ="GetUserInfo";
+	   
+	   public static final String IMAGE_ROOT = "/WebCommunitySite/images/";
 }
