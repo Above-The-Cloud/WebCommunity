@@ -1,15 +1,17 @@
 package wang.yiwangchunyu.community.dataStructures;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
- * Created by yiwangchunyu on 2018/3/9.
+ * Created by yiwangchunyu on 2018/3/22.
  */
 
-public class TaskPublishingInfo {
+public class TasksShowOnIndex {
     private String publishId;
     private String userId;
+    private String userName;
+    private String avatarUrl;
     private String restriction;
     private String category;
     private String title;
@@ -20,28 +22,33 @@ public class TaskPublishingInfo {
     private Date publish_time;
     private String code;//状态码 0：正常
     private String msg;
+    private ArrayList<String> imagesUrl;
+    private String time;
 
-    public String getMsg() {
-        return msg;
+    public String getTime() {
+        return time;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setTime(String time) {
+        this.time = time;
     }
+    public String getUserName() {
+		return userName;
+	}
 
-    public String  getRestriction(){ return restriction ;}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-    public void setRestriction(String restriction){ this.restriction = restriction; }
+	public String getAvatarUrl() {
+		return avatarUrl;
+	}
 
-    public Date getPublish_time() {
-        return publish_time;
-    }
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl;
+	}
 
-    public void setPublish_time(Date publish_time) {
-        this.publish_time = publish_time;
-    }
-
-    public String getPublishId() {
+	public String getPublishId() {
         return publishId;
     }
 
@@ -55,6 +62,14 @@ public class TaskPublishingInfo {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getRestriction() {
+        return restriction;
+    }
+
+    public void setRestriction(String restriction) {
+        this.restriction = restriction;
     }
 
     public String getCategory() {
@@ -105,11 +120,35 @@ public class TaskPublishingInfo {
         this.liked = liked;
     }
 
+    public Date getPublish_time() {
+        return publish_time;
+    }
+
+    public void setPublish_time(Date publish_time) {
+        this.publish_time = publish_time;
+    }
+
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public ArrayList<String> getImagesUrl() {
+        return imagesUrl;
+    }
+
+    public void setImagesUrl(ArrayList<String> imagesUrl) {
+        this.imagesUrl = imagesUrl;
     }
 }
